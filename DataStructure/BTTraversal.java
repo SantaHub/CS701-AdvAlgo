@@ -17,19 +17,33 @@ public class BTTraversal {
      * }
      * }
      */
-    class Solution {
-        public List<Integer> inorderTraversal(TreeNode root) {
-            List<Integer> inOrderTraversal = new ArrayList();
-            if (root != null) {
-                if (root.left != null) {
-                    inOrderTraversal.addAll(inorderTraversal(root.left));
-                }
-                inOrderTraversal.add(root.val);
-                if (root.right != null) {
-                    inOrderTraversal.addAll(inorderTraversal(root.right));
-                }
+    public List<Integer> inorderTraversal(TreeNode root) {
+        // InOrder : Left Root Right
+        List<Integer> inOrderTraversal = new ArrayList();
+        if (root != null) {
+            if (root.left != null) {
+                inOrderTraversal.addAll(inorderTraversal(root.left));
             }
-            return inOrderTraversal;
+            inOrderTraversal.add(root.val);
+            if (root.right != null) {
+                inOrderTraversal.addAll(inorderTraversal(root.right));
+            }
         }
+        return inOrderTraversal;
+    }
+
+    // PreOrder : Root Left Right
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> preOrderTraversal = new ArrayList();
+        if(root !=null){
+            preOrderTraversal.add(root.val);
+            if(root.left !=null){
+                preOrderTraversal.addAll(preorderTraversal(root.left));
+            }
+            if(root.right != null) {
+                preOrderTraversal.addAll(preorderTraversal(root.right));
+            }
+        }
+        return preOrderTraversal;
     }
 }
