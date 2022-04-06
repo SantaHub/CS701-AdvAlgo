@@ -46,14 +46,14 @@ public class vEBtreePriorityQueue {
 
     // Define NIL value to initialize min, max;
     private SimpleEntry<Integer, Integer> NIL;
-    private T ONE;
-    private T ZERO;
+    private Integer ONE;
+    private Integer ZERO;
     private Node root;
 
     /*
      * Construction method
      */
-    public vEBtreePriorityQueue(int u, T NIL, T ONE, T ZERO) throws Exception {
+    public vEBtreePriorityQueue(int u, Integer NIL, Integer ONE, Integer ZERO) throws Exception {
         this.NIL = new SimpleEntry<Integer, Integer>(NIL, NIL);
         this.ONE = ONE;
         this.ZERO = ZERO;
@@ -66,14 +66,14 @@ public class vEBtreePriorityQueue {
     /*
      * Insert x
      */
-    public void insert(T value, T priority) {
+    public void insert(Integer value, Integer priority) {
         insert(root, value, priority);
     }
 
     /*
      * Delete x
      */
-    public boolean decreaseKey(T value, T priority) {
+    public boolean decreaseKey(Integer value, Integer priority) {
         return decreaseKey(root, new SimpleEntry<Integer, Integer>(value, priority));
     }
 
@@ -97,7 +97,7 @@ public class vEBtreePriorityQueue {
      * @param v        Root
      * @param priority value to insert
      */
-    private void insert(Node v, T value, T priority) {
+    private void insert(Node v, Integer value, Integer priority) {
         SimpleEntry<Integer, Integer> x = new SimpleEntry<Integer, Integer>(value, priority);
         if (v.min == null) {
             insertEmptyNode(v, x);
@@ -117,7 +117,7 @@ public class vEBtreePriorityQueue {
         }
         if (v.u > 2) {
             if (v.cluster[high(v, x)].min == null) {
-                insert(v.summary, x.getKey(), (T) Integer.valueOf(high(v, x)));
+                insert(v.summary, x.getKey(), (Integer) Integer.valueOf(high(v, x)));
                 insertEmptyNode(v.cluster[(int) high(v, x)], new SimpleEntry<Integer, Integer>(x.getKey(), low(v, x)));
             } else {
                 insert(v.cluster[(int) high(v, x)], x.getKey(), low(v, x));
@@ -175,12 +175,12 @@ public class vEBtreePriorityQueue {
         }
 
         SimpleEntry<Integer, Integer> first_cluster = v.summary.min;
-        T priority = index(v, first_cluster, v.cluster[(Integer)first_cluster.getValue()].min);
+        Integer priority = index(v, first_cluster, v.cluster[(Integer)first_cluster.getValue()].min);
         v.min = new SimpleEntry<Integer, Integer>(x.getValue(), priority);
 
         decreaseKey(v.cluster[(int) high(v, x)], new SimpleEntry<Integer, Integer>(x.getKey(), low(v, x)));
         if (v.cluster[(int) high(v, x)].min == null) {
-            decreaseKey(v.summary, new SimpleEntry<Integer, Integer>(x.getKey(), (T) Integer.valueOf(high(v, x))));
+            decreaseKey(v.summary, new SimpleEntry<Integer, Integer>(x.getKey(), (Integer) Integer.valueOf(high(v, x))));
             if (equals(x, v.max)) {
                 SimpleEntry<Integer, Integer> summary_max = v.summary.max;
                 if (summary_max == null) {
@@ -191,7 +191,7 @@ public class vEBtreePriorityQueue {
                 }
             }
         } else if (equals(x, v.max)) {
-            priority = index(v, new SimpleEntry<Integer, Integer>(x.getValue(), (T) Integer.valueOf(high(v, x))), v.cluster[(int) high(v, x)].max);
+            priority = index(v, new SimpleEntry<Integer, Integer>(x.getValue(), (Integer) Integer.valueOf(high(v, x))), v.cluster[(int) high(v, x)].max);
             v.max = new SimpleEntry<Integer, Integer>(x.getValue(), priority);
         }
         return true;
@@ -208,8 +208,8 @@ public class vEBtreePriorityQueue {
     /**
      * The integer value of the second half of the bits of x.
      */
-    private T low(Node node, SimpleEntry<Integer, Integer> x) {
-        return (T) Integer.valueOf((Integer) x.getValue() % (int) lowerSquareRoot(node));
+    private Integer low(Node node, SimpleEntry<Integer, Integer> x) {
+        return (Integer) Integer.valueOf((Integer) x.getValue() % (int) lowerSquareRoot(node));
     }
 
     /**
@@ -222,8 +222,8 @@ public class vEBtreePriorityQueue {
     /**
      * The index in the tree of the given value.
      */
-    private T index(Node node, SimpleEntry<Integer, Integer> first_cluster, SimpleEntry<Integer, Integer> min) {
-        return (T) Integer.valueOf((int) ((Integer) first_cluster.getValue() * lowerSquareRoot(node) + (Integer) min.getValue()));
+    private Integer index(Node node, SimpleEntry<Integer, Integer> first_cluster, SimpleEntry<Integer, Integer> min) {
+        return Integer.valueOf((int) ( first_cluster.getValue() * lowerSquareRoot(node) + min.getValue()));
     }
 
     /**
