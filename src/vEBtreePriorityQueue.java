@@ -252,18 +252,19 @@ public class vEBtreePriorityQueue {
         long startTime = System.nanoTime();
         vEBtreePriorityQueue tree = new vEBtreePriorityQueue((int) Math.pow(2, 20), -1, 1, 0);
         List<Integer> values = new ArrayList<>();
-        List<Integer> priorites = new ArrayList<>();
+        List<Integer> priorities = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             values.add(i);
-            priorites.add(i);
+            priorities.add(i);
         }
         Collections.shuffle(values);
-        Collections.shuffle(priorites);
+        Collections.shuffle(priorities);
         long buildTime = System.nanoTime() - startTime;
+
         startTime = System.nanoTime();
         for (int i = 1; i < n; i++) {
             int value = values.get(i);
-            int priority = priorites.get(i);
+            int priority = priorities.get(i);
             tree.insert(value, priority);
             System.out.println(String.format("INSERT: value(%d), priority(%d)", value, priority));
         }
