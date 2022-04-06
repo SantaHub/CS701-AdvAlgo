@@ -164,8 +164,9 @@ public class vEBtreePriorityQueue {
             return false;
         }
         if (v.u == 2) {
-            v.min = ZERO.equals(x.getValue()) ? new SimpleEntry<Integer, Integer>(x.getKey(), ONE)
-                    : new SimpleEntry<Integer, Integer>(x.getKey(), ZERO);
+            // set 5 in delete element algo
+            v.min = x.getValue() == 0 ? new SimpleEntry<Integer, Integer>(x.getKey(), 1)
+                    : new SimpleEntry<Integer, Integer>(x.getKey(), 0);
             v.max = v.min;
             return false;
         }
@@ -174,10 +175,11 @@ public class vEBtreePriorityQueue {
         }
 
         SimpleEntry<Integer, Integer> first_cluster = v.summary.min;
+        // Finding the index of the min
         Integer priority = index(v, first_cluster, v.cluster[(Integer)first_cluster.getValue()].min);
         v.min = new SimpleEntry<Integer, Integer>(x.getValue(), priority);
 
-        decreaseKey(v.cluster[(int) high(v, x)], new SimpleEntry<Integer, Integer>(x.getKey(), low(v, x)));
+        decreaseKey(v.cluster[ high(v, x)], new SimpleEntry<Integer, Integer>(x.getKey(), low(v, x)));
         if (v.cluster[(int) high(v, x)].min == null) {
             decreaseKey(v.summary, new SimpleEntry<Integer, Integer>(x.getKey(), (Integer) Integer.valueOf(high(v, x))));
             if (equals(x, v.max)) {
@@ -190,8 +192,9 @@ public class vEBtreePriorityQueue {
                 }
             }
         } else if (equals(x, v.max)) {
+            // Finding index for the max.
             priority = index(v, new SimpleEntry<Integer, Integer>(x.getValue(), (Integer) Integer.valueOf(high(v, x))), v.cluster[(int) high(v, x)].max);
-            v.max = new SimpleEntry<Integer, Integer>(x.getValue(), priority);
+            v.max = new SimpleEntry<Integer, Integer>(x.getValue(), priority); // Adding the node to v
         }
         return true;
 
