@@ -17,10 +17,6 @@ public class vEBtreePriorityQueue {
             min = NIL;
             max = NIL;
 
-            initialize(u);
-        }
-
-        private void initialize(int u) {
             if (u <= 2) {
                 summary = null;
                 cluster = null;
@@ -36,15 +32,11 @@ public class vEBtreePriorityQueue {
             }
         }
 
-        /**
-         * Higher Square Root
-         */
         private int higherSquareRoot() {
             return (int) Math.pow(2, Math.ceil((Math.log10(u) / Math.log10(2)) / 2));
         }
     }
 
-    // Define NIL value to initialize min, max;
     private SimpleEntry<Integer, Integer> NIL;
     private Integer ONE;
     private Integer ZERO;
@@ -99,6 +91,7 @@ public class vEBtreePriorityQueue {
      */
     private void insert(Node v, Integer value, Integer priority) {
         SimpleEntry<Integer, Integer> x = new SimpleEntry<Integer, Integer>(value, priority);
+        // Initial condition.
         if (v.min == null) {
             insertEmptyNode(v, x);
             return;
@@ -108,24 +101,30 @@ public class vEBtreePriorityQueue {
 
     }
 
-    private void increaseKey(Node v, SimpleEntry<Integer, Integer> x) {
-        if (compareTo(x, v.min) < 0) {
+    private void increaseKey(Node vEBNode, SimpleEntry<Integer, Integer> newElement) {
+        // Changing min if v.min greater than newElement
+        if (compareTo(newElement, vEBNode.min) < 0) {
             // Exchange x with v.min
-            SimpleEntry<Integer, Integer> temp = x;
-            x = v.min;
-            v.min = temp;
+            SimpleEntry<Integer, Integer> temp = newElement;
+            newElement = vEBNode.min;
+            vEBNode.min = temp;
         }
-        if (v.u > 2) {
-            if (v.cluster[high(v, x)].min == null) {
-                insert(v.summary, x.getKey(), (Integer) Integer.valueOf(high(v, x)));
-                insertEmptyNode(v.cluster[(int) high(v, x)], new SimpleEntry<Integer, Integer>(x.getKey(), low(v, x)));
+
+        if (vEBNode.u > 2) {
+            // if the cluster is empty
+            if (vEBNode.cluster[high(vEBNode, newElement)].min == null) {
+                // Insert summary, key and  position in summary
+                insert(vEBNode.summary, newElement.getKey(), Integer.valueOf(high(vEBNode, newElement)));
+                // add new node to the empty cluster
+                insertEmptyNode(vEBNode.cluster[ high(vEBNode, newElement)], new SimpleEntry<Integer, Integer>(newElement.getKey(), low(vEBNode, newElement)));
             } else {
-                insert(v.cluster[(int) high(v, x)], x.getKey(), low(v, x));
+                // Summary already exist, insert the new node to the cluster
+                insert(vEBNode.cluster[ high(vEBNode, newElement)], newElement.getKey(), low(vEBNode, newElement));
             }
         }
 
-        if (compareTo(x, v.max) > 0) {
-            v.max = x;
+        if (compareTo(newElement, vEBNode.max) > 0) {
+            vEBNode.max = newElement;
         }
     }
 
@@ -248,7 +247,7 @@ public class vEBtreePriorityQueue {
     public static void main(String[] args) throws Exception {
         int n = 100000;
         long startTime = System.nanoTime();
-        vEBtreePriorityQueue<Integer> tree = new vEBtreePriorityQueue<Integer>((int) Math.pow(2, 20), -1, 1, 0);
+        vEBtreePriorityQueue tree = new vEBtreePriorityQueue((int) Math.pow(2, 20), -1, 1, 0);
         List<Integer> values = new ArrayList<>();
         List<Integer> priorites = new ArrayList<>();
         for (int i = 0; i < n; i++) {
