@@ -96,7 +96,7 @@ public class vEBtreePriorityQueue {
             insertEmptyNode(v, x);
             return;
         }
-
+        // Reusing the increase key logic for insert
         increaseKey(v, x);
 
     }
