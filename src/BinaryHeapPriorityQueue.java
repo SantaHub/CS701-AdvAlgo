@@ -4,7 +4,7 @@ public class BinaryHeapPriorityQueue<T> {
     // Insert(Value, priority)
     // IncreaseKey(value, priority)
 
-    private int heap[] = new int[100];
+    private int heap[] = new int[1000000];
     private int size = 0;
 
     public BinaryHeapPriorityQueue(){

@@ -45,12 +45,12 @@ public class vEBtreePriorityQueue {
     /*
      * Construction method
      */
-    public vEBtreePriorityQueue(int u, Integer NIL, Integer ONE, Integer ZERO) throws Exception {
+    public vEBtreePriorityQueue(int u, Integer NIL, Integer ONE, Integer ZERO) {
         this.NIL = new SimpleEntry<Integer, Integer>(NIL, NIL);
         this.ONE = ONE;
         this.ZERO = ZERO;
         if (!isPowerOf2(u)) {
-            throw new Exception("Tree size must be a power of 2!");
+            System.out.println("Tree size must be a power of 2!");
         }
         root = new Node(u);
     }
@@ -247,31 +247,4 @@ public class vEBtreePriorityQueue {
         return true;
     }
 
-    public static void main(String[] args) throws Exception {
-        int n = 100000;
-        long startTime = System.nanoTime();
-        vEBtreePriorityQueue tree = new vEBtreePriorityQueue((int) Math.pow(2, 20), -1, 1, 0);
-        List<Integer> values = new ArrayList<>();
-        List<Integer> priorities = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
-            values.add(i);
-            priorities.add(i);
-        }
-        Collections.shuffle(values);
-        Collections.shuffle(priorities);
-        long buildTime = System.nanoTime() - startTime;
-
-        startTime = System.nanoTime();
-        for (int i = 1; i < n; i++) {
-            int value = values.get(i);
-            int priority = priorities.get(i);
-            tree.insert(value, priority);
-            System.out.println(String.format("INSERT: value(%d), priority(%d)", value, priority));
-        }
-
-        SimpleEntry<Integer, Integer> max = tree.extractMax();
-        System.out.println(String.format("EXTRACT MAX VALUE(%d), PRIORITY(%d)", max.getKey(), max.getValue()));
-        System.out.println(String.format("BUILD TIME: %d ns", buildTime));
-        System.out.println(String.format("RUNNING TIME: %d ns", System.nanoTime() - startTime));
-    }
 }
