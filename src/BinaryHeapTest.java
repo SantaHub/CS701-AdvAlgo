@@ -1,14 +1,12 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 public class BinaryHeapTest {
     public static void main(String[] args) {
         long startTime = System.nanoTime();
         BinaryHeapPriorityQueue<Integer> binaryHeapPQ = new BinaryHeapPriorityQueue<>();
-        long millisecond = TimeUnit.MILLISECONDS.convert((System.nanoTime() - startTime),TimeUnit.NANOSECONDS);
-        System.out.println("Construction : "+ millisecond + " ms");
+        System.out.println("Construction : "+ (System.nanoTime() - startTime) + " ms");
 
         double size = Math.pow(4,10);
         List<Integer> randomN = generateRandomN(size);
@@ -27,8 +25,7 @@ public class BinaryHeapTest {
         System.out.println("Extract Max : "+ binaryHeapPQ.extractMax());
         System.out.println("Testing increase key false condition");
         binaryHeapPQ.increaseKey(8, 45);
-        millisecond = TimeUnit.MILLISECONDS.convert((System.nanoTime() - startTime),TimeUnit.NANOSECONDS);
-        System.out.println("m > n Operations : "+ millisecond + " ms");
+        System.out.println("m > n Operations : "+ (System.nanoTime() - startTime) + " ms");
     }
 
     private static List<Integer> generateRandomN(double size) {

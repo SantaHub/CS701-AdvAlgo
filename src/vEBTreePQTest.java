@@ -1,13 +1,11 @@
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 public class vEBTreePQTest {
     public static void main(String[] args) {
         int n = 9900;
         long startTime = System.nanoTime();
         vEBtreePriorityQueue vEBPQ = new vEBtreePriorityQueue((int) Math.pow(5, 10), -1, 1, 0);
-        long millisecond = TimeUnit.MILLISECONDS.convert((System.nanoTime() - startTime),TimeUnit.NANOSECONDS);
-        System.out.println("Construction time of vEB : "+millisecond+ " ms." );
+        System.out.println("Construction time of vEB : "+(System.nanoTime() - startTime)+ " ms." );
 
         List<Integer> values = generateRandomN(n);
         List<Integer> priorities = generateRandomN(n);
@@ -29,8 +27,7 @@ public class vEBTreePQTest {
         }
         max = vEBPQ.extractMax();
         System.out.println(String.format("Extracted Max value (%d) with priority (%d)", max.getKey(), max.getValue()));
-        millisecond = TimeUnit.MILLISECONDS.convert((System.nanoTime() - startTime),TimeUnit.NANOSECONDS);
-        System.out.println(String.format("Running time for the vEB Tree: %d ms", millisecond));
+        System.out.println(String.format("Running time for the vEB Tree: %d ms", (System.nanoTime() - startTime)));
 
     }
 
