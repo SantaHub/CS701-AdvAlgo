@@ -3,9 +3,9 @@ import java.util.concurrent.TimeUnit;
 
 public class vEBTreePQTest {
     public static void main(String[] args) {
-        int n = 90;
+        int n = 9900;
         long startTime = System.nanoTime();
-        vEBtreePriorityQueue vEBPQ = new vEBtreePriorityQueue((int) Math.pow(2, 10), -1, 1, 0);
+        vEBtreePriorityQueue vEBPQ = new vEBtreePriorityQueue((int) Math.pow(5, 10), -1, 1, 0);
         long millisecond = TimeUnit.MILLISECONDS.convert((System.nanoTime() - startTime),TimeUnit.NANOSECONDS);
         System.out.println("Construction time of vEB : "+millisecond+ " ms." );
 
@@ -23,7 +23,7 @@ public class vEBTreePQTest {
 
         // IncreaseKey
         System.out.println("Increasing key for 100 times");
-        for(int i=1;i<10;i++){
+        for(int i=1;i<100;i++){
             max.setValue(i+n);
             vEBPQ.increaseKey(vEBPQ.getRoot(), max);
         }

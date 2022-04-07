@@ -1,17 +1,23 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class BinaryHeapTest {
     public static void main(String[] args) {
-        BinaryHeapPriorityQueue<Integer> binaryHeapPQ = new BinaryHeapPriorityQueue<>();
-        int size = 100000;
-        int[] randomN = generateRandomN(size);
-        System.out.println("Inserting "+size+ " elements into the Binary heap PQ");
         long startTime = System.nanoTime();
+        BinaryHeapPriorityQueue<Integer> binaryHeapPQ = new BinaryHeapPriorityQueue<>();
+        long millisecond = TimeUnit.MILLISECONDS.convert((System.nanoTime() - startTime),TimeUnit.NANOSECONDS);
+        System.out.println("Construction : "+ millisecond + " ms");
+
+        double size = Math.pow(4,10);
+        List<Integer> randomN = generateRandomN(size);
+        System.out.println("Inserting "+size+ " elements into the Binary heap PQ");
+        startTime = System.nanoTime();
         binaryHeapPQ.insert(1);
         binaryHeapPQ.insert(2);
         for(int i =2; i < size; i++) {
-            binaryHeapPQ.insert(randomN[i]);
+            binaryHeapPQ.insert(randomN.get(i));
         }
 
         System.out.println("Extract Max : "+ binaryHeapPQ.extractMax());
@@ -21,15 +27,17 @@ public class BinaryHeapTest {
         System.out.println("Extract Max : "+ binaryHeapPQ.extractMax());
         System.out.println("Testing increase key false condition");
         binaryHeapPQ.increaseKey(8, 45);
-        long millisecond = TimeUnit.MILLISECONDS.convert((System.nanoTime() - startTime),TimeUnit.NANOSECONDS);
+        millisecond = TimeUnit.MILLISECONDS.convert((System.nanoTime() - startTime),TimeUnit.NANOSECONDS);
         System.out.println("m > n Operations : "+ millisecond + " ms");
     }
 
-    private static int[] generateRandomN(int size) {
+    private static List<Integer> generateRandomN(double size) {
         Random rand = new Random(); //instance of random class
-        int[] randomInt = new int[size];
+        List<Integer> randomInt = new ArrayList<>();
+
+        int bound = 100000;
         for (int i = 0; i < size; i++) {
-            randomInt[i] = rand.nextInt(size);
+            randomInt.add( rand.nextInt(bound) );
         }
         return randomInt;
     }
