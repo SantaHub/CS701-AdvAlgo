@@ -21,8 +21,8 @@ public class BinaryHeapTest {
         System.out.println("Extract Max : "+ binaryHeapPQ.extractMax());
         System.out.println("Testing increase key false condition");
         binaryHeapPQ.increaseKey(8, 45);
-        long seconds = TimeUnit.MILLISECONDS.convert((System.nanoTime() - startTime),TimeUnit.NANOSECONDS);
-        System.out.println("m > n Operations : "+ seconds + " ms");
+        long millisecond = TimeUnit.MILLISECONDS.convert((System.nanoTime() - startTime),TimeUnit.NANOSECONDS);
+        System.out.println("m > n Operations : "+ millisecond + " ms");
     }
 
     private static int[] generateRandomN(int size) {

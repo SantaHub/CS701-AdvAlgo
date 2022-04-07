@@ -1,34 +1,46 @@
-import java.util.AbstractMap;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class vEBTreePQTest {
     public static void main(String[] args) {
-        int n = 100000;
+        int n = 90;
         long startTime = System.nanoTime();
-        vEBtreePriorityQueue vEBPQ = new vEBtreePriorityQueue((int) Math.pow(2, 20), -1, 1, 0);
-        List<Integer> values = new ArrayList<>();
-        List<Integer> priorities = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
-            values.add(i);
-            priorities.add(i);
-        }
-        Collections.shuffle(values);
-        Collections.shuffle(priorities);
-        long buildTime = System.nanoTime() - startTime;
-        System.out.println("Constructed the vEB Tree");
-        startTime = System.nanoTime();
-        for (int i = 1; i < n; i++) {
-            int value = values.get(i);
-            int priority = priorities.get(i);
-            vEBPQ.insert(value, priority);
-        }
+        vEBtreePriorityQueue vEBPQ = new vEBtreePriorityQueue((int) Math.pow(2, 10), -1, 1, 0);
+        long millisecond = TimeUnit.MILLISECONDS.convert((System.nanoTime() - startTime),TimeUnit.NANOSECONDS);
+        System.out.println("Construction time of vEB : "+millisecond+ " ms." );
 
+        List<Integer> values = generateRandomN(n);
+        List<Integer> priorities = generateRandomN(n);
+
+        startTime = System.nanoTime();
+        // Insert
+        for (int i = 0; i < n; i++) {
+            vEBPQ.insert(values.get(i), priorities.get(i));
+        }
+        // Extract Max
         AbstractMap.SimpleEntry<Integer, Integer> max = vEBPQ.extractMax();
         System.out.println(String.format("Extracted Max value (%d) with priority (%d)", max.getKey(), max.getValue()));
-        System.out.println(String.format("Build Time for the vEB Tree: %d ns", buildTime));
-        System.out.println(String.format("Running time for the vEB Tree: %d ns", System.nanoTime() - startTime));
 
+        // IncreaseKey
+        System.out.println("Increasing key for 100 times");
+        for(int i=1;i<10;i++){
+            max.setValue(i+n);
+            vEBPQ.increaseKey(vEBPQ.getRoot(), max);
+        }
+        max = vEBPQ.extractMax();
+        System.out.println(String.format("Extracted Max value (%d) with priority (%d)", max.getKey(), max.getValue()));
+        millisecond = TimeUnit.MILLISECONDS.convert((System.nanoTime() - startTime),TimeUnit.NANOSECONDS);
+        System.out.println(String.format("Running time for the vEB Tree: %d ms", millisecond));
+
+    }
+
+
+    private static List<Integer> generateRandomN(int size) {
+        Random rand = new Random(); //instance of random class
+        List<Integer>  randomInt = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            randomInt.add(rand.nextInt(size));
+        }
+        return randomInt;
     }
 }

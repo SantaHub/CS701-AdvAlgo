@@ -49,10 +49,11 @@ public class vEBtreePriorityQueue {
         this.NIL = new SimpleEntry<Integer, Integer>(NIL, NIL);
         this.ONE = ONE;
         this.ZERO = ZERO;
-        if (!isPowerOf2(u)) {
-            System.out.println("Tree size must be a power of 2!");
-        }
         root = new Node(u);
+    }
+
+    public Node getRoot() {
+        return root;
     }
 
     /*
@@ -101,7 +102,7 @@ public class vEBtreePriorityQueue {
 
     }
 
-    private void increaseKey(Node vEBNode, SimpleEntry<Integer, Integer> newElement) {
+    public void increaseKey(Node vEBNode, SimpleEntry<Integer, Integer> newElement) {
         // Changing min if v.min greater than newElement
         if (compareTo(newElement, vEBNode.min) < 0) {
             // Exchange x with v.min
