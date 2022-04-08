@@ -4,17 +4,18 @@ public class vEBTreePQTest {
     public static void main(String[] args) {
         int n = 9900;
         long startTime = System.nanoTime();
-        vEBtreePriorityQueue vEBPQ = new vEBtreePriorityQueue((int) Math.pow(5, 10), -1, 1, 0);
-        System.out.println("Construction time of vEB : "+(System.nanoTime() - startTime)+ " ms." );
+        vEBtreePriorityQueue vEBPQ = new vEBtreePriorityQueue((int) Math.pow(3, 10), -1, 1, 0);
+        System.out.println("Construction time of vEB : "+(double)((System.nanoTime() - startTime)/1000000)+ " ms." );
 
         List<Integer> values = generateRandomN(n);
         List<Integer> priorities = generateRandomN(n);
-
         startTime = System.nanoTime();
+
         // Insert
         for (int i = 0; i < n; i++) {
             vEBPQ.insert(values.get(i), priorities.get(i));
         }
+
         // Extract Max
         AbstractMap.SimpleEntry<Integer, Integer> max = vEBPQ.extractMax();
         System.out.println(String.format("Extracted Max value (%d) with priority (%d)", max.getKey(), max.getValue()));
@@ -27,7 +28,7 @@ public class vEBTreePQTest {
         }
         max = vEBPQ.extractMax();
         System.out.println(String.format("Extracted Max value (%d) with priority (%d)", max.getKey(), max.getValue()));
-        System.out.println(String.format("Running time for the vEB Tree: %d ms", (System.nanoTime() - startTime)));
+        System.out.println(String.format("Running time for the vEB Tree: %f ms", (double)((System.nanoTime() - startTime)/1000000) ));
 
     }
 

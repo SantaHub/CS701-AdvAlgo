@@ -4,37 +4,37 @@ import java.util.Random;
 
 public class BinaryHeapTest {
     public static void main(String[] args) {
-        long startTime = System.nanoTime();
         BinaryHeapPriorityQueue<Integer> binaryHeapPQ = new BinaryHeapPriorityQueue<>();
-        System.out.println("Construction : "+ (System.nanoTime() - startTime) + " ms");
 
-        double size = Math.pow(4,10);
+        double size = Math.pow(10,2);
+        int i =0;
         List<Integer> randomN = generateRandomN(size);
         System.out.println("Inserting "+size+ " elements into the Binary heap PQ");
-        startTime = System.nanoTime();
+        long startTime = System.nanoTime();
         binaryHeapPQ.insert(1);
         binaryHeapPQ.insert(2);
-        for(int i =2; i < size; i++) {
+        for(i =2; i < size; i++) {
             binaryHeapPQ.insert(randomN.get(i));
         }
-
-        System.out.println("Extract Max : "+ binaryHeapPQ.extractMax());
-        System.out.println("Increasing key to 100001");
-        binaryHeapPQ.increaseKey(0, 100000);
-        binaryHeapPQ.increaseKey(1, 100001);
-        System.out.println("Extract Max : "+ binaryHeapPQ.extractMax());
-        System.out.println("Testing increase key false condition");
+        System.out.println("Construction : "+((System.nanoTime() - startTime) /1000000.0 ) + " ms");
+//        System.out.println("Extract Max : "+ binaryHeapPQ.extractMax());
+        startTime = System.nanoTime();
+        for(i =2; i < size; i++) {
+            binaryHeapPQ.increaseKey(i, (int) (size + i));
+        }
+//        System.out.println("Max size " + (int) (size + i));
+//        System.out.println("Extract Max : "+ binaryHeapPQ.extractMax());
+//        System.out.println("Testing increase key false condition");
         binaryHeapPQ.increaseKey(8, 45);
-        System.out.println("m > n Operations : "+ (System.nanoTime() - startTime) + " ms");
+        System.out.println("m > n Operations : "+ ((System.nanoTime() - startTime)/1000000.0) + " ms");
     }
 
     private static List<Integer> generateRandomN(double size) {
         Random rand = new Random(); //instance of random class
         List<Integer> randomInt = new ArrayList<>();
 
-        int bound = 100000;
         for (int i = 0; i < size; i++) {
-            randomInt.add( rand.nextInt(bound) );
+            randomInt.add( rand.nextInt((int)size) );
         }
         return randomInt;
     }
